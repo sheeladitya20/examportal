@@ -1,30 +1,18 @@
-const express = require('express');
+const express = require("express");
 const router = express.Router();
-const authController = require('../controllers/authController');
+const authController = require("../controllers/authController");
 const jwt = require("jsonwebtoken");
 const app = express();
 const secretKey = "secretKey";
 
-// JWT TOKEN 
+// JWT TOKEN
 app.get("/", (req, resp) => {
   resp.json({
     message: "a sample api",
   });
 });
 
-app.post("/login", 
-// (req, resp) => {
-//   const user = {
-//   };
-//   jwt.sign({ user }, secretKey, { expiresIn: "300s" }, (err, token) => {
-//     resp.json({
-//       token,
-//     });
-//   }
-//   );
-// }
-authController.login
-);
+app.post("/login", authController.login);
 app.post("/profile", verifyToken, (req, resp) => {
   jwt.verify(req.token, secretKey, (err, authData) => {
     if (err) {
@@ -54,9 +42,9 @@ function verifyToken(req, resp, next) {
   }
 }
 // Register a new user
-router.post('/register', authController.register);
+router.post("/register", authController.register);
 
 // Authenticate user and generate JWT token
-router.post('/login', authController.login);
+router.post("/login", authController.login);
 
 module.exports = router;

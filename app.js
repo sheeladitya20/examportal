@@ -10,7 +10,7 @@ app.use(express.json());
 
 app.use('/auth', authRoutes);
 app.use('/users', userRoutes);
-// app.use('/exams', examRoutes);
+// app.use('/exams', examRoutes); 
 // app.use('/results', resultRoutes);
 
 // Start the server
