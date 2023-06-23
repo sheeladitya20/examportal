@@ -12,18 +12,19 @@ app.get("/", (req, resp) => {
   });
 });
 
-app.post("/login", (req, resp) => {
-  const user = {
-    id: 1,
-    username: "formation",
-    email: "formation@gmail.com",
-  };
-  jwt.sign({ user }, secretKey, { expiresIn: "300s" }, (err, token) => {
-    resp.json({
-      token,
-    });
-  });
-});
+app.post("/login", 
+// (req, resp) => {
+//   const user = {
+//   };
+//   jwt.sign({ user }, secretKey, { expiresIn: "300s" }, (err, token) => {
+//     resp.json({
+//       token,
+//     });
+//   }
+//   );
+// }
+authController.login
+);
 app.post("/profile", verifyToken, (req, resp) => {
   jwt.verify(req.token, secretKey, (err, authData) => {
     if (err) {

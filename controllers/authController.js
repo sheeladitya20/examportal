@@ -33,31 +33,35 @@ var register = async function (req, res) {
 
 
 
-  var login = async function (req, res) {
+  async function login(req, res) {
     try {
       const { email, password } = req.body;
   
       // Check if the user exists
-      const user = await User.findOne({ where: { email } });
+      const user = await User.findOne({where: {email}});
       if (!user) {
-        return res.status(401).json({ message: 'koi bhi User ki jagah nai' });
+        return res.status(401).json({ message: 'Invalid credentials' });
       }
   
       // Compare the password
       const isPasswordValid = await bcrypt.compare(password, user.password);
       if (!isPasswordValid) {
-        return res.status(401).json({ message: ' password pe ghor kare' });
+        return res.status(401).json({ message: 'Invalid credentials' });
       }
+      console.log("passwordValidjsdaji", user.password);
   
       // Generate JWT token
-      const token = jwt.sign({ userId: user.id }, 'sejefnsjhw', { expiresIn: '1h' });
+      const token = jwt.sign({ userId: user.id, userName: user.name }, 'jsdfghberjh', { expiresIn: '1h' });
   
-      return res.status(200).json({ token });
+
+
+      return res.status(200).json({ user, token });
     } catch (error) {
       console.error('Error during user login:', error);
       return res.status(500).json({ message: 'Internal server error' });
     }
   }
+  
   
 
 
@@ -66,6 +70,5 @@ var register = async function (req, res) {
   module.exports = {
     register,
     login,
-    
   };
   

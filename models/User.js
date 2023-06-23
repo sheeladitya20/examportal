@@ -28,7 +28,7 @@ const User = sequelize.define("User", {
 });
 
 
-User.sync({ force: true });
+User.sync({ force: false });
 console.log("The table for the User model was just (re)created!");
 
 module.exports = User;
