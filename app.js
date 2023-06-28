@@ -4,6 +4,9 @@ const authRoutes = require('./routes/authRouter');
 const userRoutes = require('./routes/userRouter');
 const examRoutes = require('./routes/examRouter');
 const resultRoutes = require('./routes/resultRouter');
+// const { JsonWebTokenError } = require('jsonwebtoken');
+const jwtMiddleware = require('./middleware/jwtMiddleware');
+
 
 app.use(express.json());
 
