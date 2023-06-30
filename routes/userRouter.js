@@ -7,8 +7,13 @@ const { authenticateToken } = require('../middleware/jwtMiddleware');
 
 
 router.get('/',authenticateToken, userController.getUsers);
+router.get('/:userId', userController.getOneUser);
+
+router.get('/:userId/result', userController.getStudentResult);
+
 router.post('/', userController.postUsers)
-router.put('/:userId',authenticateToken, userController.updateUser);
-router.delete('/:userId',authenticateToken, userController.deleteUser);
+router.put('/:userId', userController.updateUser);
+
+router.delete('/:userId', userController.deleteUser);
 
 module.exports=router;

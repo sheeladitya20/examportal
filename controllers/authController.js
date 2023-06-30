@@ -1,15 +1,16 @@
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const User = require('../models/User');
+// const jwtMiddleware = require('../middleware/jwtMiddleware');
 var register = async function (req, res) {
     try {
       const { name, email, password, type } = req.body;
   
-    //   // Check if the user already exists
-    //   const existingUser = await User.findOne({ where: { email } });
-    //   if (existingUser) {
-    //     return res.status(409).json({ message: 'User already exists' });
-    //   }
+      // Check if the user already exists
+      const existingUser = await User.findOne({ where: { email } });
+      if (existingUser) {
+        return res.status(409).json({ message: 'User already exists' });
+      }
   
       // Hash the password
       const hashedPassword = await bcrypt.hash(password, 10);
@@ -48,10 +49,9 @@ var register = async function (req, res) {
       if (!isPasswordValid) {
         return res.status(401).json({ message: 'Invalid credentials' });
       }
-      console.log("passwordValidjsdaji", user.password);
-  
+     
       // Generate JWT token
-      const token = jwt.sign({ userId: user.id, userName: user.name }, 'jsdfghberjh', { expiresIn: '1h' });
+      const token = jwt.sign({ userId: user.id, userName: user.name }, 'secretKey', { expiresIn: '1h' });
   
 
 

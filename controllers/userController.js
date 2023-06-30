@@ -6,7 +6,49 @@ const getUsers = async (req, res) => {
   res.status(200).send(users);
 };
 
-async function postUsers(req, res) {
+// Get a user by ID
+const getOneUser = async (req, res) => {
+  const  id  = req.params.userId;
+
+
+  try {
+    const users = await User.findByPk(id);
+    if (!users) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+
+    res.json(users);
+  } catch (error) {
+    console.error('Error while retrieving user:', error);
+    res.status(500).json({ message: 'Server error' });
+  }
+};
+
+
+// Get a student's result by user ID
+const getStudentResult = async (req, res) => {
+  const id = req.params.userId;
+
+  try {
+    const users = await User.findByPk(id);
+    if (!users) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+
+    const result = await result.findOne({ where: { student: id } });
+    if (!result) {
+      return res.status(404).json({ message: 'Result not found' });
+    }
+
+    res.json(result);
+  } catch (error) {
+    console.error('Error while retrieving student result:', error);
+    res.status(500).json({ message: 'Server error' });
+  }
+};
+
+
+async function postUsers(req, res) {``
   try {
     const { name, email, password, type } = req.body;
 
@@ -83,4 +125,6 @@ module.exports = {
   postUsers,
   updateUser,
   deleteUser,
+  getOneUser,
+  getStudentResult
 };
